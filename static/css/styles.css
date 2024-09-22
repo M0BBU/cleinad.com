@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Garibaldi';
+  font-style: medium;
+  src: url('/fonts/Garibaldi-Medium.otf');
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  src: url('/fonts/Alegreya-VariableFont_wght.ttf');
+}
+
+:global(*){
+  background-color: #fffff0;
+}
+
+.center{
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.center-screen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
