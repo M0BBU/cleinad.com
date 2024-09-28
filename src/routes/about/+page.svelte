@@ -8,15 +8,18 @@
     I like history, especially the classics, along with programming. I
     enjoy reading about Greek and Roman history, and I study Ancient Greek
     during my free time after taking a course in my last semester of
-    college–it really is such a wonderful language.
+    college–it really is such a cool language.
 
     To pay the bills, I work as a software engineer on wacky infrastructure
-    stuff. Part of the reason why I started this website is because I want a place
+    stuff. Part of the reason why I started this website is because I wanted a place
     where I can write about topics I don't understand well. Studying
     computer science in college certainly gave me a good foundation of theory, but
     I found that I don't have a great understanding of how many things in our daily
     trade of creating and deploying software really work. Perhaps some day I'll
     have confidence that I actually know what I'm doing!
+
+    Other than that, perhaps I'll post about any other ramblings that come to
+    mind.
 
     Assuming I have enough energy after work, I hope to be able to
     post fairly often here.
