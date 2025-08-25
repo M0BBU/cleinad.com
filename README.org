@@ -1,0 +1,3 @@
+* My blog setup
+
+Source code for [[file:posts/emacs-emacs-everywhere.org::*A Homepage and Index][cleinad.com]].
