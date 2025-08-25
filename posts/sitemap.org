@@ -1,0 +1,3 @@
+#+TITLE: Sitemap for project posts
+
+- [[file:emacs-and-blogging.org][Emacs & Blogging]] {{{timestamp(2025-08-09)}}}
