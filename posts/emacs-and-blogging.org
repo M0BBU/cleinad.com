@@ -1,96 +1,112 @@
 #+TITLE: Emacs & Blogging
-#+SUBTITLE: Revamping my blog.
+#+SUBTITLE: How emacs took over my blog.
 #+DATE: <2025-08-09 Sat>
 
-My old blog setup was pretty half-baked. It was some broken [[https://svelte.dev/][svelte]] stuff that
-I briefly played around with along with a brief foray into Haskell and [[https://jaspervdj.be/hakyll/][hakyll]].
+#+begin_quote
+I use emacs, which might be thought of as a thermonuclear word processor. It was
+created by Richard Stallman; enough said. It is written in Lisp, which is the
+only computer language that is beautiful. It is colossal, and yet it only edits
+straight ASCII text files, which is to say, no fonts, no boldface, no
+underlining. In other words, the engineer-hours that, in the case of Microsoft
+Word, were devoted to features like mail merge, and the ability to embed
+feature-length motion pictures in corporate memoranda, were, in the case of
+emacs, focused with maniacal intensity on the deceptively simple-seeming problem
+of editing text. If you are a professional writer--i.e., if someone else is
+getting paid to worry about how your words are formatted and printed--emacs
+outshines all other editing software in approximately the same way that the
+noonday sun does the stars. It is not just bigger and brighter; it simply makes
+everything else vanish.
 
-They were fine, but really there was just too much going on. [fn:1:I'm also not
-much of a web developer nor a [[https://en.wiktionary.org/wiki/Haskeller][haskeller]].]
+-- In the Beginning was the Command Line by Neal Stephenson
+#+end_quote
 
-Too much abstraction, and there was always something slightly wrong with the build
-system. I wanted something more simple and something that I actually understood.
-For this, my +OS+ text editor of choice ~emacs~ and [[https://orgmode.org/][org mode]] were my saviors.
+I found this quote funny given that I just spent the last week rewriting my
+entire blog in emacs.
 
-* The Holy Org Mode
+For some context, I did not do a great job setting up my blog in the
+beginning. First, it was some terrible looking [[https://svelte.dev/][svelte]] stuff, then I had the
+bright idea of migrating to Haskell and [[https://jaspervdj.be/hakyll/][hakyll]].
 
-Anybody who uses emacs will probably have heard of org mode. For the uninitiated,
-org mode is essentially markdown on steroids.
+It didn't turn out well.[fn:1:It seems that I'm not much of a web developer nor a
+[[https://en.wiktionary.org/wiki/Haskeller][haskeller]].]
 
-It may also be helpful to clarify some terminology first. Org /mode/ is an emacs
-specific concept. Emacs [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Modes.html][modes]] let us customize how we interact with specific file
-types. So, we have ~*.org~ files and ~org-mode~ to edit them. For many, org
-files and org mode are synonymous because there's no point in editing org
-files without org-mode. [fn:2:When I initially started using emacs this was
-something that always confused me given that org mode is very popular for emacs users.]
+I'm sure with enough time and toil, I could've gotten something I liked -- but
+I was lazy and I didn't want to spent time learning (yet another) build
+system. I also quickly realized that this was the perfect opportunity to
+"emacs-ify" this website -- writing my entire blog in emacs and [[https://orgmode.org/][org mode]].
 
-Indeed, there is nothing special about org /files/. It's just plain text -- similar
-to markdown files.[fn:7:You could even do something sacrilegious like edit org files
-with vim.] However, editing them with emacs is where we have something
-powerful.[fn:8:Allegedly. I must confess that I haven't used org mode much, so while
-I know what it is -- I can't really endorse it (yet).]
+* Org Mode Fun
 
-Now, what convinced me to actually start to learn org is its [[https://orgmode.org/manual/Publishing.html][publishing]] feature.
-Org has a publishing system that lets us convert a collection of org files into
-plain HTML. This gave me the idea that if I wrote my blog in org, publishing
-it becomes quite simple.[fn:3: After we go through the initial pain of reading documentation and
-setting everything up, of course.] I write all my posts as org files, convert them
-to HTML with org publish, and copy them over to my server hosting this blog.
+Org mode is one of the special things of emacs. Think of it like editing
+markdown on steroids. [fn:2:For those who may have not heard of org mode, org
+/mode/ is just an emacs mode. An emacs [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Modes.html][mode]] lets us to customize how we
+interact with specific file types. Thus, ~org-mode~ edits ~*.org~ files. Org
+files are actually just plain text -- the way org mode treats them is what makes
+it powerful.]
 
-It also gives me the great benefits of learning and unlocking the hidden secrets
-of org mode.
+
+Confession -- I don't use org mode much. I just never really had the need
+to. However, while I was on my journey to "emacs-ify" this website, I learned
+that org has a built-in publishing system that lets us convert a collection of
+org files into plain HTML. In other words, we can write this entire blog in org,
+and just export it as HTML to publish. A very nice and simple solution.[fn:3:
+After we go through the initial pain of reading documentation and setting
+everything up, of course.]
+
+I also get the great benefits of learning and unlocking the hidden secrets of
+org mode.
 
 * Publishing and Setup Fun
 
-I would rather not make this into a tutorial. However, I thought it might be
-interesting to list out the general flow along with any interesting notes.
+I won't make this post into a tutorial -- there are plenty of other places that
+would be better for that. Instead, I thought it might be interesting to just list
+out the general flow along with any interesting challenges.
 
-The way this blog is published is by defining an org project through the variable
-[[https://orgmode.org/manual/Project-alist.html][org-publish-project-alist]]. An org project essentially lets us group a set of org
-files to automatically export into HTML with the proper references and links to
-the files. Here's an incomplete code snippet of what this blog looks like:
-
+The core logic of this blog is through defining an org project with the
+variable [[https://orgmode.org/manual/Project-alist.html][org-publish-project-alist]]. As the name suggests, an org project lets us
+group a set of org files to automatically export into HTML with the proper
+references and links to the files.  Here's an incomplete code snippet of how
+this blog was defined:
 #+begin_src emacs-lisp
-  (setq org-publish-project-alist
-        `(("pages"
-           :base-directory "~/src/me/cleinad.com"
-           :base-extension "org"
-           ;; ...
-           ;; ... Custom options
-           ;; ...
-           :html-head ,cleinad/css-head
-           :publishing-directory "~/src/me/cleinad.com/html"
-           :publishing-function org-html-publish-to-html)
+(setq org-publish-project-alist
+      `(("pages"
+         :base-directory "~/src/me/cleinad.com"
+         :base-extension "org"
+         ;; ...
+         ;; ... Custom options
+         ;; ...
+         :html-head ,cleinad/css-head
+         :publishing-directory "~/src/me/cleinad.com/html"
+         :publishing-function org-html-publish-to-html)
 
-          ("posts"
-           :base-directory "~/src/me/cleinad.com/posts"
-           :base-extension "org"
-           ;; More options ...
-           :auto-sitemap t
-           :publishing-directory "~/src/me/cleinad.com/html/posts"
-           :publishing-function org-html-publish-to-html)
+        ("posts"
+         :base-directory "~/src/me/cleinad.com/posts"
+         :base-extension "org"
+         ;; More options ...
+         :auto-sitemap t
+         :publishing-directory "~/src/me/cleinad.com/html/posts"
+         :publishing-function org-html-publish-to-html)
 
-          ("static"
-           :base-directory "~/src/me/cleinad.com/static"
-           :recursive t
-           :base-extension "css\\|txt\\|jpg\\|gif\\|png\\|ttf\\|otf"
-           :publishing-directory "~/src/me/cleinad.com/html/static"
-           :publishing-function org-publish-attachment)
+        ("static"
+         :base-directory "~/src/me/cleinad.com/static"
+         :recursive t
+         :base-extension "css\\|txt\\|jpg\\|gif\\|png\\|ttf\\|otf"
+         :publishing-directory "~/src/me/cleinad.com/html/static"
+         :publishing-function org-publish-attachment)
 
-          ("cleinad.com" :components ("pages" "posts" "static"))))
+        ("cleinad.com" :components ("pages" "posts" "static"))))
 #+end_src
-
-The gist of this is that we can define specific directories of org files and tell
-org how to treat and export them as HTML.
+I don't think it's terribly complex. We just define specific directories of org
+files and tell org how to treat and export them as HTML.
 
 The rest of the setup is basically tweaking it.
 
 * CSS Fun
-The default style that org exports with is pretty ugly and makes for an unpleasant
-reading experience. We can use our own styling with these two options:
+The default style that org exports with is pretty ugly and makes for an
+unpleasant reading experience. We can use our own styling with these two
+options:
 #+begin_src elisp
-  :html-head-include-default-style nil
-  :html-head ,cleinad/css-head
+  :html-head-include-default-style nil :html-head ,cleinad/css-head
 #+end_src
 
 This just tells org to append all HTML files with the below.
@@ -98,88 +114,95 @@ This just tells org to append all HTML files with the below.
   <link rel="stylesheet" href="/static/style.css" type="text/css">
 #+end_src
 
-The style of this blog may look familiar as it is inspired by the [[https://rstudio.github.io/tufte/][Tufte handout style]].
-In the link, the authors provided a very helpful CSS package which I used as a starting
-off point for the blog.
+The style of this blog may look familiar as it is inspired by the [[https://rstudio.github.io/tufte/][Tufte handout
+style]].  In the link, the authors provided a helpful CSS package which I used as
+a jumping off point for the blog.
 
-Now, an interesting challenge I had with using that CSS package was emulating the use
-of sidenotes. The package already provided a styling solution for sidenotes. All
-we need is to wrap the sidenote like so:
+An interesting challenge I had with using that CSS package was emulating
+the use of sidenotes. The package already provided a styling solution for
+sidenotes. All we need is to wrap the sidenote like so:
 #+begin_src html
-  <label for="sn.2" class="margin-toggle sidenote-number">
-  </label>
+  <label for="sn.2" class="margin-toggle sidenote-number"> </label>
   <input type="checkbox" id="sn.2" class="margin-toggle"/>
   <span class="sidenote">
     This is a sidenote.
   </span>
 #+end_src
-However, org only has support for /footnotes/, and the way footnotes were exported
-was not compatible with how the package styles sidenotes. The issue boiled down
-to that org assumed footnote content will go to the /bottom/. Given this, even
-if we provide our own format for footnotes, [fn:4: See the variable ~org-html-footnote-format~.]
+The issue was getting org to export our sidenotes in that format.
+
+Org only has support for /footnotes/, and the way footnotes were exported was
+not compatible with that sidenote format. The issue boiled down to that org
+assumed footnote content will be placed at the bottom. Even if we provide our
+own format for footnotes, [fn:4: See the variable ~org-html-footnote-format~.]
 it will still only format it with the reference number -- not content.
 
-Luckily, nearly everything about emacs is [[https://www.youtube.com/watch?v=urcL86UpqZc][customizable]] and so is the actual function
-that org calls to format footnote references. Some digging around in the emacs
-help pages [fn:5: ~C-h~.] reveals that ~org-html-footnote-reference~ is responsible
-for formatting footnote references. A deeper look will show that the last
-few lines of elisp in the function creates the actual HTML:
+Luckily, nearly everything about emacs is [[https://www.youtube.com/watch?v=urcL86UpqZc][customizable]] and so is the actual
+function that org calls to format footnote references. Some digging around in
+the emacs help pages [fn:5: ~C-h~.] will reveal that the function
+~org-html-footnote-reference~ is responsible for formatting footnote
+references. If we take a look at the function, we can see that the last few
+lines of elisp in the function create the actual HTML:
 #+begin_src elisp
   (defun org-html-footnote-reference (footnote-reference _contents info)
-  ;; Extraneous logic above ...
-  ;; ...
-  (format
-   (plist-get info :html-footnote-format)
-   (org-html--anchor
-    id n (format
-          " class=\"footref\" href=\"#fn.%s\" role=\"doc-backlink\"" (or label n))
-    info)))
+    ;; Extraneous logic above ...
+    ;; ...
+    (format
+     (plist-get info :html-footnote-format)
+     (org-html--anchor
+      id n (format
+            " class=\"footref\" href=\"#fn.%s\" role=\"doc-backlink\"" (or label n))
+      info)))
 #+end_src
-We can just change it to format the HTML with the actual content as well.
+This makes our job pretty easy. We can just change it to format the HTML with
+the actual content instead.
 #+begin_src elisp
-  (format
-   "<label for=\"sn.%s\" class=\"margin-toggle sidenote-number\">
-   </label>
-   <input type=\"checkbox\" id=\"sn.%s\" class=\"margin-toggle\"/>
-   <span class=\"sidenote\">
-   %s
-   </span>"
-   (or label n)
-   (or label n)
-   _contents)))) ;; _contents holds the actual footnote content.
+(format
+ "<label for=\"sn.%s\" class=\"margin-toggle sidenote-number\">
+ </label>
+ <input type=\"checkbox\" id=\"sn.%s\" class=\"margin-toggle\"/>
+ <span class=\"sidenote\">
+ %s
+ </span>"
+ (or label n)
+ (or label n)
+ _contents)))) ;; _contents holds the actual footnote content.
 #+end_src
 Which gives us sidenotes that look like the ones you see on this post right now.
 
-* A Homepage and Index
-The last thing I'll talk about is the home page -- which is actually another
-org file. I wanted my home page to be a simple list of all the posts I wrote.
-We can solve this through another feature of org publish that automatically
-generates a sitemap for you.
+* Homepage Fun
+The last thing I'll talk about is creating the home page as another org
+file. The slightly tricky part was displaying a list of all the posts. Manually
+creating and updating this list sounded awful -- a better solution was needed.
 
-In [[*Publishing and Setup Fun][Publishing and Setup Fun]], you may have noticed the ~:auto-sitemap t~ line. This
-option tells org to create a sitemap of all org files in that directory. For this
-blog, I have a folder containing only the blog posts, and org automatically updates
-the ~sitemap.org~ file with all the org files in that directory:
+In [[*Publishing and Setup Fun][Publishing and Setup Fun]], you may have noticed the ~:auto-sitemap t~
+line. This option tells org to create a sitemap of all org files in that
+directory. This means we can just create a folder containing all the blog posts,
+have org generate a ~sitemap.org~ file with links to all posts, then include
+part of that sitemap file in our homepage -- which is exactly what I did.
+
+The ~sitemap.org~ file that org automatically updates looks like this:
 #+begin_src org
-  #+TITLE: Sitemap for project posts
+  ,#+TITLE: Sitemap for project posts
 
   - [[file:emacs-and-blogging.org][Emacs & Blogging]] {{{timestamp(2025-08-09)}}}
 #+end_src
 
-I can then create basic ~index.org~ file as the homepage which embeds the sitemap
-like so:
+The homepage is an ~index.org~ file which includes the sitemap like so:
 #+begin_src org
   Hi there! I'm Daniel. A software engineer based in Seattle. I hope you enjoy.
 
-  #+INCLUDE: posts/sitemap.org :lines "3-"
+  ,#+INCLUDE: posts/sitemap.org :lines "3-"
 #+end_src
-Which is the homepage we have now.
+Which is the homepage you see now.
 
 * Summary and Results
-I'm pretty satisfied with the results. A big plus is that I can keep all the complexity
-within emacs -- which is something I somewhat [fn:6:Obligatory [[https://stackoverflow.com/questions/10942008/what-does-emacs-learning-curve-actually-look-like/10942023#10942023][emacs learning curve]].]
-understand. It is also nice to know that I have full control over the publishing
-system and can tweak it comfortably. Finally, since I've spent quite a bit
-of time setting this up, I do hope that it'll motivate me to write more.
+All the fun elisp and CSS code for this blog can be found on Github [[https://github.com/M0BBU/cleinad.com][here]].
+
+I'm happy with the results. Writing this first post in org mode is quite nice,
+and I can see why it's spoken of so highly. I'm sure I'll get more comfortable
+with org mode as I write more too. I like how everything is contained within
+emacs -- which is something I somewhat [fn:6:Obligatory [[https://stackoverflow.com/questions/10942008/what-does-emacs-learning-curve-actually-look-like/10942023#10942023][emacs learning curve]].]
+understand. I also hope this will motivate me to write more given that I spent
+so much time setting this up.
 
 Thanks for reading!

@@ -10,7 +10,7 @@
   "<header>
     <b>cleinad. a blog.</b>
       <nav>
-        <a href=\"/html\">home</a>
+        <a href=\"/\">home</a>
       </nav>
   </header>"
   "The default html preamble appended to all pages.")
@@ -18,7 +18,6 @@
 (defconst cleinad/post-html-preamble
   "<h1 class=\"title\">%t</h1>
     <div class=\"blogdescription\">
-      <p class=\"date\">%d</p>
       <p>%s</p>
     </div>"
   "The post specific html preamble.")
@@ -108,7 +107,6 @@ CONTENTS as a sidenote. INFO is a plist holding contextual information."
          :section-numbers nil
          :with-toc nil
          :with-tags t
-         :with-date t
          :with-title nil
          :auto-sitemap t
          :sitemap-format-entry cleinad/org-sitemap-date-entry-format
