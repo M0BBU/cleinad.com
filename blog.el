@@ -85,7 +85,7 @@ CONTENTS as a sidenote. INFO is a plist holding contextual information."
 
 (setq org-publish-project-alist
       `(("pages"
-         :base-directory "~/src/me/cleinad.com"
+         :base-directory "~/code/cleinad.com"
          :base-extension "org"
          :recursive nil
          :section-numbers nil
@@ -97,11 +97,11 @@ CONTENTS as a sidenote. INFO is a plist holding contextual information."
          :html-head-include-default-style nil
          :html-footnotes-section ""
          :html-head ,cleinad/css-head
-         :publishing-directory "~/src/me/cleinad.com/html"
+         :publishing-directory "~/code/cleinad.com/html"
          :publishing-function org-html-publish-to-html)
 
         ("posts"
-         :base-directory "~/src/me/cleinad.com/posts"
+         :base-directory "~/code/cleinad.com/posts"
          :base-extension "org"
          :recursive nil
          :section-numbers nil
@@ -115,14 +115,14 @@ CONTENTS as a sidenote. INFO is a plist holding contextual information."
          :html-head-include-default-style nil
          :html-footnotes-section ""
          :html-head ,cleinad/css-head
-         :publishing-directory "~/src/me/cleinad.com/html/posts"
+         :publishing-directory "~/code/cleinad.com/html/posts"
          :publishing-function org-html-publish-to-html)
 
         ("static"
-         :base-directory "~/src/me/cleinad.com/static"
+         :base-directory "~/code/cleinad.com/static"
          :recursive t
          :base-extension "css\\|txt\\|jpg\\|gif\\|png\\|ttf\\|otf"
-         :publishing-directory "~/src/me/cleinad.com/html/static"
+         :publishing-directory "~/code/cleinad.com/html/static"
          :publishing-function org-publish-attachment)
 
         ("cleinad.com" :components ("pages" "posts" "static"))))
