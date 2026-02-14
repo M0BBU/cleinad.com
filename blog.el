@@ -3,14 +3,19 @@
 (require 'ox-publish)
 
 (defconst cleinad/css-head
-  "<link rel=\"stylesheet\" href=\"/static/style.css\" type=\"text/css\"/>"
+  "<link rel=\"stylesheet\" href=\"/static/style.css\" type=\"text/css\"/>
+   <script src=\"/static/scripts/highlight.min.js\"></script>
+   <script>hljs.highlightAll();</script>
+   <link rel=\"icon\" href=\"/static/images/herodotus.png\" type=\"image/png\">"
   "Custom CSS for blog.")
 
 (defconst cleinad/page-html-preamble
   "<header>
+    <img src=\"/static/images/herodotus.png\" alt=\"herodotus\" class=\"logo\">
     <b>cleinad. a blog.</b>
       <nav>
         <a href=\"/\">home</a>
+        <a href=\"/about.html\">about</a>
       </nav>
   </header>"
   "The default html preamble appended to all pages.")
@@ -25,8 +30,6 @@
 (setq org-export-global-macros
       '(("timestamp" . "@@html:<span class=\"posttimestamp\">$1</span>@@")))
 
-(setq org-footnote-define-inline t)
-
 (defun cleinad/org-sitemap-date-entry-format (entry style project)
   "Format ENTRY in org-publish PROJECT Sitemap format ENTRY ENTRY STYLE format that includes date."
   (let ((filename (org-publish-find-title entry project)))
@@ -37,51 +40,6 @@
               filename
               (format-time-string "%Y-%m-%d"
                                   (org-publish-find-date entry project))))))
-
-(defun cleinad/org-html-footnote-as-sidenote (footnote-reference _contents info)
-  "Transcode a FOOTNOTE-REFERENCE element from Org to HTML, but displays the actual
-CONTENTS as a sidenote. INFO is a plist holding contextual information."
-  (concat
-   ;; Insert separator between two footnotes in a row.
-   (let ((prev (org-export-get-previous-element footnote-reference info)))
-     (when (org-element-type-p prev 'footnote-reference)
-       (plist-get info :html-footnote-separator)))
-   (let* ((n (org-export-get-footnote-number footnote-reference info))
-          (label (org-element-property :label footnote-reference))
-          ;; Do not assign number labels as they appear in Org mode -
-          ;; the footnotes are re-numbered by
-          ;; `org-export-get-footnote-number'.  If the label is not a
-          ;; number, keep it.
-          (label (if (and (stringp label)
-                          (equal label (number-to-string (string-to-number label))))
-                          nil
-                   label))
-	  (id (format "fnr.%s%s"
-		      (or label n)
-		      (if (org-export-footnote-first-reference-p
-			   footnote-reference info)
-			  ""
-                        (let ((label (org-element-property :label footnote-reference)))
-                          (format
-                           ".%d"
-                           (org-export-get-ordinal
-                            footnote-reference info '(footnote-reference)
-                            `(lambda (ref _)
-                               (if ,label
-                                   (equal (org-element-property :label ref) ,label)
-                                 (not (org-element-property :label ref)))))))))))
-     (format
-      "<label for=\"sn.%s\" class=\"margin-toggle sidenote-number\">
-       </label>
-       <input type=\"checkbox\" id=\"sn.%s\" class=\"margin-toggle\"/>
-       <span class=\"sidenote\">
-       %s
-       </span>"
-      (or label n)
-      (or label n)
-      _contents))))
-
-(advice-add 'org-html-footnote-reference :override #'cleinad/org-html-footnote-as-sidenote)
 
 (setq org-publish-project-alist
       `(("pages"
@@ -102,10 +60,11 @@ CONTENTS as a sidenote. INFO is a plist holding contextual information."
 
         ("posts"
          :base-directory "~/code/cleinad.com/posts"
+         :htmlized-source t
          :base-extension "org"
          :recursive nil
          :section-numbers nil
-         :with-toc nil
+         :with-toc t
          :with-tags t
          :with-title nil
          :auto-sitemap t

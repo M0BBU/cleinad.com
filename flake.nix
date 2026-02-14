@@ -21,6 +21,7 @@
               buildInputs = [
                 python3
                 startServer
+                tree
               ];
             };
           }
