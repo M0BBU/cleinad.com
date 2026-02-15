@@ -3,7 +3,7 @@
 (require 'ox-publish)
 
 (defconst cleinad/css-head
-  "<link rel=\"stylesheet\" href=\"/static/style.css\" type=\"text/css\"/>
+  "<link rel=\"stylesheet\" href=\"/static/style.css?v=1.2\" type=\"text/css\"/>
    <script src=\"/static/scripts/highlight.min.js\"></script>
    <script>hljs.highlightAll();</script>
    <link rel=\"icon\" href=\"/static/images/herodotus.png\" type=\"image/png\">"
