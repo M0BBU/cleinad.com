@@ -39,6 +39,7 @@
               filename
               (format-time-string "%b %d %Y"
                                   (org-publish-find-date entry project))))))
+
 (defun cleinad/org-publish-sitemap (title list)
   "This takes the org-publish-sitemap-default function and also adds a ATTR_HTML
 element so that we can apply some specific CSS rules just for the sitemap.
@@ -96,5 +97,3 @@ internal representation for the files to include, as returned by
          :publishing-function org-publish-attachment)
 
         ("cleinad.com" :components ("pages" "posts" "static"))))
-
-(org-publish "cleinad.com" t)
