@@ -22,6 +22,7 @@
                 python3
                 startServer
                 tree
+                minhtml
               ];
             };
           }

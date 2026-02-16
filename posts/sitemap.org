@@ -1,3 +1,4 @@
 #+TITLE: Sitemap for project posts
 
-- [[file:emacs-and-blogging.org][Emacs & Blogging]] {{{timestamp(2025-08-09)}}}
+#+ATTR_HTML: :id sitemap
+- [[file:2025-08-09-emacs-and-blogging.org][Emacs & Blogging]] {{{timestamp(Aug 09 2025)}}}
