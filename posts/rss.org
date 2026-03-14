@@ -1,8 +1,14 @@
 #+TITLE: Sitemap for project rss
 
+* * RSS Feed now Available
+:PROPERTIES:
+:RSS_PERMALINK: 2026-03-14-rss-feed-now-available.html
+:PUBDATE: 2026-03-14
+:ID:       df663a62-0022-413a-955b-5049f24570ef
+:END:
 * * Emacs & Blogging
 :PROPERTIES:
 :RSS_PERMALINK: 2025-08-09-emacs-and-blogging.html
 :PUBDATE: 2025-08-09
-:ID:       5f27cd6a-0833-4738-93fd-6a2e46c5dc32
+:ID:       57a1279e-e671-417d-becc-570ac8a15c2f
 :END:

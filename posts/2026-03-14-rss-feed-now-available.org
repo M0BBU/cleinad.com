@@ -1,0 +1,9 @@
+#+TITLE: RSS Feed now Available
+#+DATE: <2026-03-14 Sat>
+#+FILETAGS: :rss:
+
+This will be a short post. Just wanted to announce that this blog has an [[https://cleinad.com/rss.xml][RSS
+feed]] now. Many thanks to Toon Claes writing about [[https://writepermission.com/org-blogging-rss-feed.html][his clever solution]] to
+generate RSS feeds with org mode which helped me very much.
+
+Enjoy!
