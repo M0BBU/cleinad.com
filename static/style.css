@@ -17,13 +17,13 @@ header {
 
 
 blockquote {
-  margin: 2rem 0;
-  padding: 0.5rem 1.5rem;
-  border-left: 3px solid #4a6741;
-  background-color: #f4f1ec;
-  color: #3e473e;
-  font-style: italic;
-  line-height: 1.6;
+    margin: 2rem 0;
+    padding: 0.5rem 1.5rem;
+    border-left: 3px solid #4a6741;
+    background-color: #f4f1ec;
+    color: #3e473e;
+    font-style: italic;
+    line-height: 1.6;
 }
 
 code {
@@ -38,8 +38,8 @@ body :not(:is(h1,h2,h3,h4,h5,h6)) {
 }
 
 .blogdescription {
-  font-size: 0.9rem;
-  font-style: italic;
+    font-size: 0.9rem;
+    font-style: italic;
 }
 
 .logo {
@@ -66,8 +66,8 @@ body :not(:is(h1,h2,h3,h4,h5,h6)) {
 }
 
 #sitemap li {
-     display: flex;
-     justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (prefers-color-scheme: dark) {

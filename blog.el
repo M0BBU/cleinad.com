@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
-
 (require 'ox-publish)
+(require 'ox-rss)
 
 (defconst cleinad/css-head
   "<link rel=\"stylesheet\" href=\"/static/style.css?v=1.2\" type=\"text/css\"/>
@@ -14,6 +14,7 @@
       <nav>
         <a href=\"/\">home</a>
         <a href=\"/about.html\">about</a>
+        <a href=\"/rss.xml\">rss</a>
       </nav>
   </header>"
   "The default html preamble appended to all pages.")
@@ -50,6 +51,32 @@ internal representation for the files to include, as returned by
   (concat "#+TITLE: " title "\n\n" "#+ATTR_HTML: :id sitemap\n"
 	      (org-list-to-org list)))
 
+(defun cleinad/org-rss-publish-to-rss (plist filename pub-dir)
+  "Publish RSS with PLIST, only when FILENAME is 'rss.org'.
+PUB-DIR is when the output will be placed."
+  (if (equal "rss.org" (file-name-nondirectory filename))
+      (org-rss-publish-to-rss plist filename pub-dir)))
+
+(defun cleinad/format-rss-feed (title list)
+  "Generate RSS feed, as a string.
+TITLE is the title of the RSS feed.  LIST is an internal
+representation for the files to include, as returned by
+`org-list-to-lisp'."
+  (concat "#+TITLE: " title "\n\n"
+          (org-list-to-subtree list 1)))
+
+(defun cleinad/format-rss-feed-entry (entry style project)
+  (let ((file (org-publish--expand-file-name entry project)))
+    (cond
+     ((not (directory-name-p entry))
+      (format "* %s\n:PROPERTIES:\n:RSS_PERMALINK: %s.html\n:PUBDATE: %s\n:END:\n"
+              (org-publish-find-title entry project)
+              (file-name-sans-extension entry)
+              (format-time-string "%Y-%m-%d" (org-publish-find-date entry project))))
+     ((eq style 'tree)
+      (file-name-nondirectory (directory-file-name entry)))
+     (t entry))))
+
 (setq org-publish-project-alist
       `(("pages"
          :base-directory "~/code/cleinad.com"
@@ -73,6 +100,7 @@ internal representation for the files to include, as returned by
          :htmlized-source t
          :base-extension "org"
          :recursive nil
+         :exclude "rss.org"
          :section-numbers nil
          :with-toc t
          :with-tags t
@@ -96,4 +124,20 @@ internal representation for the files to include, as returned by
          :publishing-directory "~/code/cleinad.com/html/static"
          :publishing-function org-publish-attachment)
 
-        ("cleinad.com" :components ("pages" "posts" "static"))))
+        ("rss"
+	       :base-directory "~/code/cleinad.com/posts"
+	       :base-extension "org"
+           :exclude "sitemap.org"
+           :auto-sitemap t
+           :author "Dan C"
+           :email "m0bbu@pm.me"
+           :sitemap-format-entry cleinad/format-rss-feed-entry
+           :sitemap-sort-files anti-chronologically
+           :sitemap-function cleinad/format-rss-feed
+           :sitemap-filename "rss.org"
+	       :publishing-directory "~/code/cleinad.com/html"
+	       :publishing-function cleinad/org-rss-publish-to-rss
+	       :html-link-home "https://cleinad.com/"
+	       :html-link-use-abs-url t)
+
+        ("cleinad.com" :components ("pages" "posts" "static" "rss"))))

@@ -1,0 +1,8 @@
+#+TITLE: Sitemap for project rss
+
+* * Emacs & Blogging
+:PROPERTIES:
+:RSS_PERMALINK: 2025-08-09-emacs-and-blogging.html
+:PUBDATE: 2025-08-09
+:ID:       5f27cd6a-0833-4738-93fd-6a2e46c5dc32
+:END:

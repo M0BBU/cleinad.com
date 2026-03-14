@@ -107,6 +107,7 @@ spits out the website in the ~html~ folder. The rest of the setup is just
 tweaking it to make the blog look slightly less ugly!
 
 ** Making the blog look less ugly
+
 The default style that org exports with is pretty ugly and makes for an
 unpleasant reading experience. We can use our own styling with these two
 options:
@@ -120,6 +121,7 @@ Which just tells org to append all HTML files with the below.
 #+end_src
 
 ** Automatically updating the homepage
+
 Obviously, nobody wants to manually update their home page whenever they write a
 new blog post. That sounds silly.
 

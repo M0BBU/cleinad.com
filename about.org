@@ -1,1 +1,4 @@
 Hi there! I'm Daniel. A software engineer based in Washington. I hope you enjoy.
+
+The photo on the navigation bar is of Herotodus, taken from [[https://oll.libertyfund.org/people/herodotus][The Online Library
+of Liberty]].

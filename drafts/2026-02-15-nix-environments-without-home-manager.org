@@ -1,0 +1,13 @@
+#+TITLE: Nix environments without home manager
+#+SUBTITLE: A half decent tutorial on getting started with nix.
+#+DATE: <2026-02-15 Sun>
+#+FILETAGS: :nix:
+
+[[https://nixos.org/][Nix]] is a declarative package manager/build system that's supposed to make
+reproducible builds easy. It's the first sentence you see on their website after
+all.
+
+I now run Nix on my Macbook Pro.
+I've always been curious to try nix.
+Homebrew. Homebrew is fine but I didn't enjoy how it would install packages
+globally in ~/opt/homebrew/...~
